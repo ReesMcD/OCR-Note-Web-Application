@@ -1,0 +1,37 @@
+ul {
+  list-style: none;
+}
+.header {
+  text-align: left;
+  font-size: 1em !important;
+  margin-left: 2em;
+}
+.page-header {
+  border-color: #CFCDD0;
+ }
+
+.navbar {
+  border-radius: 0;
+  background-color: #222222 !important;
+}
+.jumbo {
+  margin-top: -20px;
+  /*background-image: url("../../assets/jumbo.jpg");*/
+  background-size: cover;
+  padding-bottom: 20%;
+}
+.card {
+  /*min-width: 25%;*/
+}
+.card-header{
+  text-align: left;
+  margin-left: 5%;
+}
+.link{
+  color: #909090;
+  padding: .5em .5em .5em .5em;
+}
+.link:hover, .link:focus{
+  color: #ffffff;
+  text-decoration: none;
+}
