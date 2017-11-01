@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {PageHeader, Panel, Row, Grid, Col, Jumbotron} from 'react-bootstrap';
+import {
+  PageHeader,
+  Panel,
+  Row,
+  Grid,
+  Col,
+  Jumbotron
+} from 'react-bootstrap';
 import {
   Card,
   CardActions,
@@ -13,8 +20,17 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {grey200} from 'material-ui/styles/colors';
+import * as firebase from "firebase";
 
 var info;
+firebase.initializeApp({
+  apiKey: "AIzaSyAcjSYn8aBoMUukqkYCUZMjzNHpXlp2I8c",
+  authDomain: "takepicture-b07cc.firebaseapp.com",
+  databaseURL: "https://takepicture-b07cc.firebaseio.com",
+  projectId: "takepicture-b07cc",
+  storageBucket: "takepicture-b07cc.appspot.com",
+  messagingSenderId: "393936412972"
+});
 
 const title = (
   <h3>Standings</h3>
@@ -32,14 +48,29 @@ class Home extends Component {
     this.state = {
       data: ''
     }
+    firebase.auth().signInAnonymously().then((user) => {
+      console.log(user.isAnonymous);
+    });
+    var database = firebase.database();
+
+    //Trying for get requests 
+    // database.ref().once('/p1/').then(function (snap) {
+    //  console.log('snap.val()', snap.val());
+    //  });;
+    // firebase.database().ref('p1').once('value').then(function(snapshot) {
+    //   console.log("From firebase");
+    //   console.log(snapshot);
+    //});
   }
 
+//this is currently being rejected --> look into fixing
   getResponse = () => {
-    axios.get('https://jsonplaceholder.typicode.com/posts/1').then((response) => {
-      //console.log(response);
-      this.setState({data: response['data']['body']
+    axios.get('https://takepicture-b07cc.firebaseio.com/').then((response) => {
+      console.log(response['p1']);
+      this.setState({data: response['p1']
       });
     }).catch((error) => {
+      console.log("Error Caught:");
       console.log(error);
     });
   }
@@ -48,7 +79,7 @@ class Home extends Component {
     this.getResponse();
   }
 
-//Cards will eventually need to be mapped depedning on amount of notes
+  //Cards will eventually need to be mapped depedning on amount of notes
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -66,7 +97,7 @@ class Home extends Component {
 
             <Col sm={4} md={4}>
               <Card className="card">
-                <CardHeader className='card-header' title="Note 2" />
+                <CardHeader className='card-header' title="Note 2"/>
                 <CardText>
                   {this.state.data}
                 </CardText>
@@ -74,7 +105,7 @@ class Home extends Component {
             </Col>
             <Col sm={4} md={4}>
               <Card className="card">
-                <CardHeader className='card-header' title="Note 3" />
+                <CardHeader className='card-header' title="Note 3"/>
                 <CardText>
                   {this.state.data}
                 </CardText>
