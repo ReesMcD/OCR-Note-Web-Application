@@ -22,7 +22,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {grey200} from 'material-ui/styles/colors';
 import * as firebase from "firebase";
 
-var info;
 firebase.initializeApp({
   apiKey: "AIzaSyAcjSYn8aBoMUukqkYCUZMjzNHpXlp2I8c",
   authDomain: "takepicture-b07cc.firebaseapp.com",
@@ -31,10 +30,6 @@ firebase.initializeApp({
   storageBucket: "takepicture-b07cc.appspot.com",
   messagingSenderId: "393936412972"
 });
-
-const title = (
-  <h3>Standings</h3>
-);
 
 const muiTheme = getMuiTheme({
   fontFamily: 'courier',
@@ -47,76 +42,53 @@ class Home extends Component {
 
     this.state = {
       data: [],
+      count: 0
     }
 
     firebase.auth().signInAnonymously().then((user) => {
       console.log(user.isAnonymous);
     });
     var database = firebase.database();
-
-     //this.getResponse.bind(this);
+    this.renderCards();
   }
 
-//this is currently being rejected --> look into fixing
   getResponse = () => {
-    // axios.get('https://takepicture-b07cc.firebaseio.com/').then((response) => {
-    //   console.log(response['p1']);
-    //   this.setState({data: response['p1']
-    //   });
-    // }).catch((error) => {
-    //   console.log("Error Caught:");
-    //   console.log(error);
-    // });
-    firebase.database().ref('p1').once('value').then((snapshot) => {
+    firebase.database().ref('notes').once('value').then((snapshot) => {
       console.log("From firebase");
       console.log(snapshot.val());
-      //this.setState({data: snapshot.val()});
-      this.setState({data: snapshot.val()
-         });
+      this.setState({data: snapshot.val()});
     });
   }
 
   componentDidMount() {
     this.getResponse();
+    this.renderCards();
   }
 
-  //Cards will eventually need to be mapped depedning on amount of notes
+  renderCards() {
+    //console.log(this.state.data);
+    return this.state.data.map(info => {
+      return (<Col sm={4} md={4}>
+        <Card className="card">
+          <CardHeader className='card-header' title="Note"/>
+          <CardText>
+            {info}
+          </CardText>
+        </Card>
+      </Col>)
+    })
+  }
+
   render() {
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+    return (<MuiThemeProvider muiTheme={muiTheme}>
 
-        <Grid>
-          <Row className="show-grid">
-            <Col sm={4} md={4}>
-              <Card className="card">
-                <CardHeader className='card-header' title="Note 1"/>
-                <CardText>
-                  {this.state.data}
-                </CardText>
-              </Card>
-            </Col>
+      <Grid>
+        <Row className="show-grid">
+          {this.renderCards()}
+        </Row>
+      </Grid>
 
-            <Col sm={4} md={4}>
-              <Card className="card">
-                <CardHeader className='card-header' title="Note 2"/>
-                <CardText>
-                  {this.state.data}
-                </CardText>
-              </Card>
-            </Col>
-            <Col sm={4} md={4}>
-              <Card className="card">
-                <CardHeader className='card-header' title="Note 3"/>
-                <CardText>
-                  {this.state.data}
-                </CardText>
-              </Card>
-            </Col>
-          </Row>
-        </Grid>
-
-      </MuiThemeProvider>
-    );
+    </MuiThemeProvider>);
   }
 }
 
