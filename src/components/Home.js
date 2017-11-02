@@ -46,32 +46,33 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      data: ''
+      data: [],
     }
+
     firebase.auth().signInAnonymously().then((user) => {
       console.log(user.isAnonymous);
     });
     var database = firebase.database();
 
-    //Trying for get requests 
-    // database.ref().once('/p1/').then(function (snap) {
-    //  console.log('snap.val()', snap.val());
-    //  });;
-    // firebase.database().ref('p1').once('value').then(function(snapshot) {
-    //   console.log("From firebase");
-    //   console.log(snapshot);
-    //});
+     //this.getResponse.bind(this);
   }
 
 //this is currently being rejected --> look into fixing
   getResponse = () => {
-    axios.get('https://takepicture-b07cc.firebaseio.com/').then((response) => {
-      console.log(response['p1']);
-      this.setState({data: response['p1']
-      });
-    }).catch((error) => {
-      console.log("Error Caught:");
-      console.log(error);
+    // axios.get('https://takepicture-b07cc.firebaseio.com/').then((response) => {
+    //   console.log(response['p1']);
+    //   this.setState({data: response['p1']
+    //   });
+    // }).catch((error) => {
+    //   console.log("Error Caught:");
+    //   console.log(error);
+    // });
+    firebase.database().ref('p1').once('value').then((snapshot) => {
+      console.log("From firebase");
+      console.log(snapshot.val());
+      //this.setState({data: snapshot.val()});
+      this.setState({data: snapshot.val()
+         });
     });
   }
 
