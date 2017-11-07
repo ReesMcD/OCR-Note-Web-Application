@@ -15,6 +15,7 @@ import {
   CardTitle,
   CardText
 } from 'material-ui/Card';
+import Toggle from 'material-ui/Toggle'
 import '../css/styles.css';
 import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -60,6 +61,22 @@ class Home extends Component {
     });
   }
 
+  handleExpandChange = (expanded) => {
+    this.setState({expanded: expanded});
+  };
+
+  handleToggle = (event, toggle) => {
+    this.setState({expanded: toggle});
+  };
+
+  handleExpand = () => {
+    this.setState({expanded: true});
+  };
+
+  handleReduce = () => {
+    this.setState({expanded: false});
+  };
+
   componentDidMount() {
     this.getResponse();
     this.renderCards();
@@ -68,24 +85,29 @@ class Home extends Component {
   renderCards() {
     //console.log(this.state.data);
     return this.state.data.map(info => {
-      return (<Col sm={4} md={4}>
+      return (<Row className="show-grid">
         <Card className="card">
           <CardHeader className='card-header' title="Note"/>
           <CardText>
             {info}
           </CardText>
         </Card>
-      </Col>)
+      </Row>)
     })
   }
 
   render() {
     return (<MuiThemeProvider muiTheme={muiTheme}>
-
       <Grid>
-        <Row className="show-grid">
-          {this.renderCards()}
-        </Row>
+              <Col sm={2} md={2} lg={2}>
+                {this.renderCards()}
+              </Col>
+                <Card id="panel" className="card">
+                  <CardHeader className='card-header' title="Note"/>
+                  <CardText>
+                    Hello
+                  </CardText>
+                </Card>
       </Grid>
 
     </MuiThemeProvider>);

@@ -1,6 +1,9 @@
 ul {
   list-style: none;
 }
+table {
+  width: 100%;
+}
 .header {
   text-align: left;
   font-size: 1em !important;
@@ -20,8 +23,17 @@ ul {
   background-size: cover;
   padding-bottom: 20%;
 }
+#panel {
+  position: fixed;
+  float: right;
+  margin-left: -4em;
+  height: 87.5vh;
+}
 .card {
-  /*min-width: 25%;*/
+  display: inline-table;
+  min-width: 45vw;
+  max-width: 45vw;
+  width: 45vw;
   margin-bottom: 2.5em;
     position: relative;
     -webkit-transition: all 200ms ease-in;
