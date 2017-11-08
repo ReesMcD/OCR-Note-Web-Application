@@ -1,5 +1,5 @@
 body{
-  background-color: #6B818C;
+  background-color: #8597A0;
 }
 ul {
   list-style: none;
@@ -15,7 +15,6 @@ table {
 .page-header {
   border-color: #CFCDD0;
  }
-
 .navbar {
   border-radius: 0;
   background-color: #222222 !important;
@@ -26,6 +25,9 @@ table {
   background-size: cover;
   padding-bottom: 20%;
 }
+#card_buttons{
+  margin-left: 25vw;
+}
 #scrollbars{
   margin-left: 2vw;
 }
@@ -33,7 +35,7 @@ table {
   position: fixed;
   float: right;
   margin-left: -4em;
-  height: 87.5vh;
+  height: 85vh;
   right: 25px;
 }
 #left {

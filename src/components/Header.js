@@ -11,17 +11,9 @@ class Header extends Component {
       <Navbar className='navbar' inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">Take Picture</Link>
+            Take Picture
           </Navbar.Brand>
-          <Navbar.Toggle/>
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav>
-            <NavItem>Edit</NavItem>
-            <NavItem>Save</NavItem>
-            <NavItem>Delete</NavItem>
-          </Nav>
-        </Navbar.Collapse>
+          </Navbar.Header>
       </Navbar>
     );
   }

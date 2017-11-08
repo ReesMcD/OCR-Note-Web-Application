@@ -21,6 +21,7 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {grey200} from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
 import * as firebase from "firebase";
 import {Scrollbars} from 'react-custom-scrollbars';
 firebase.initializeApp({
@@ -43,14 +44,15 @@ class Home extends Component {
 
     this.state = {
       data: [],
-      text: "Jake is a nerd"
+      text: "Jake is a nerd",
+      count: 0
     }
 
     firebase.auth().signInAnonymously().then((user) => {
       console.log(user.isAnonymous);
     });
-    var database = firebase.database();
-    this.renderCards();
+    // var database = firebase.database();
+    // this.renderCards();
   }
 
   getResponse = () => {
@@ -73,8 +75,8 @@ class Home extends Component {
         <Card className="card" onClick={() => {
             this.setState({text: info});
           }}>
-          <CardHeader className='card-header' title="Note"/>
-          <CardText>
+          <CardHeader className='card-header' title="Your note title" subtitle="Some of the notes text..."/>
+          <CardText expandable={true}>
             {info}
           </CardText>
         </Card>
@@ -90,13 +92,18 @@ class Home extends Component {
         </Col>
         <Card id="panel" className="card">
           <CardHeader className='card-header' title="Note"/>
+            <CardActions id="card_buttons">
+              <FlatButton label="Edit"/>
+              <FlatButton label="Delete"/>
+            </CardActions>
           <CardText>
-            <Scrollbars id="scrollbars" autoHeight="autoHeight" autoHeightMin={100} autoHeightMax={500} style={{
+            <Scrollbars id="scrollbars" autoHeight="autoHeight" autoHeightMin={100} autoHeightMax={450} style={{
                 width: 500
               }}>
               {this.state.text}
             </Scrollbars>
           </CardText>
+
         </Card>
       </Grid>
 
