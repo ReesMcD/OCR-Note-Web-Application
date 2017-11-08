@@ -99,7 +99,7 @@ class Home extends Component {
   render() {
     return (<MuiThemeProvider muiTheme={muiTheme}>
       <Grid>
-              <Col sm={2} md={2} lg={2}>
+              <Col id="left" sm={2} md={2} lg={2}>
                 {this.renderCards()}
               </Col>
                 <Card id="panel" className="card">

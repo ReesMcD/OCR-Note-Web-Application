@@ -28,6 +28,11 @@ table {
   float: right;
   margin-left: -4em;
   height: 87.5vh;
+  right: 10px;
+}
+#left {
+  position: absolute;
+  left: 0px;
 }
 .card {
   display: inline-table;
