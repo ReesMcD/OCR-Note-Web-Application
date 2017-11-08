@@ -22,7 +22,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {grey200} from 'material-ui/styles/colors';
 import * as firebase from "firebase";
-import { Scrollbars } from 'react-custom-scrollbars';
+import {Scrollbars} from 'react-custom-scrollbars';
 firebase.initializeApp({
   apiKey: "AIzaSyAcjSYn8aBoMUukqkYCUZMjzNHpXlp2I8c",
   authDomain: "takepicture-b07cc.firebaseapp.com",
@@ -43,7 +43,7 @@ class Home extends Component {
 
     this.state = {
       data: [],
-      text: "Jake is a nerd",
+      text: "Jake is a nerd"
     }
 
     firebase.auth().signInAnonymously().then((user) => {
@@ -70,7 +70,7 @@ class Home extends Component {
     //console.log(this.state.data);
     return this.state.data.map(info => {
       return (<Row className="show-grid">
-        <Card className="card" onClick= {() => {
+        <Card className="card" onClick={() => {
             this.setState({text: info});
           }}>
           <CardHeader className='card-header' title="Note"/>
@@ -85,18 +85,19 @@ class Home extends Component {
   render() {
     return (<MuiThemeProvider muiTheme={muiTheme}>
       <Grid>
-              <Col id="left" sm={2} md={2} lg={2}>
-                {this.renderCards()}
-              </Col>
-                <Card id="panel" className="card">
-                  <CardHeader className='card-header' title="Note"/>
-                  <CardText>
-                    <Scrollbars id="scrollbars" autoHeight autoHeightMin={100}
-        autoHeightMax={500} style={{ width: 500 }}>
-                    {this.state.text}
-                    </Scrollbars>
-                  </CardText>
-                </Card>
+        <Col id="left" sm={2} md={2} lg={2}>
+          {this.renderCards()}
+        </Col>
+        <Card id="panel" className="card">
+          <CardHeader className='card-header' title="Note"/>
+          <CardText>
+            <Scrollbars id="scrollbars" autoHeight="autoHeight" autoHeightMin={100} autoHeightMax={500} style={{
+                width: 500
+              }}>
+              {this.state.text}
+            </Scrollbars>
+          </CardText>
+        </Card>
       </Grid>
 
     </MuiThemeProvider>);
