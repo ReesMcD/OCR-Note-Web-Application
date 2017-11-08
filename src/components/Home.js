@@ -43,7 +43,7 @@ class Home extends Component {
 
     this.state = {
       data: [],
-      count: 0
+      text: "Jake is a nerd",
     }
 
     firebase.auth().signInAnonymously().then((user) => {
@@ -61,22 +61,6 @@ class Home extends Component {
     });
   }
 
-  handleExpandChange = (expanded) => {
-    this.setState({expanded: expanded});
-  };
-
-  handleToggle = (event, toggle) => {
-    this.setState({expanded: toggle});
-  };
-
-  handleExpand = () => {
-    this.setState({expanded: true});
-  };
-
-  handleReduce = () => {
-    this.setState({expanded: false});
-  };
-
   componentDidMount() {
     this.getResponse();
     this.renderCards();
@@ -86,7 +70,9 @@ class Home extends Component {
     //console.log(this.state.data);
     return this.state.data.map(info => {
       return (<Row className="show-grid">
-        <Card className="card">
+        <Card className="card" onClick= {() => {
+            this.setState({text: info});
+          }}>
           <CardHeader className='card-header' title="Note"/>
           <CardText>
             {info}
@@ -105,7 +91,7 @@ class Home extends Component {
                 <Card id="panel" className="card">
                   <CardHeader className='card-header' title="Note"/>
                   <CardText>
-                    Hello
+                    {this.state.text}
                   </CardText>
                 </Card>
       </Grid>
