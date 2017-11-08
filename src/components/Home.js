@@ -24,6 +24,8 @@ import {grey200} from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
 import * as firebase from "firebase";
 import {Scrollbars} from 'react-custom-scrollbars';
+import {Editor, EditorState, ContentState} from 'draft-js';
+
 firebase.initializeApp({
   apiKey: "AIzaSyAcjSYn8aBoMUukqkYCUZMjzNHpXlp2I8c",
   authDomain: "takepicture-b07cc.firebaseapp.com",
@@ -37,16 +39,16 @@ const muiTheme = getMuiTheme({
   fontFamily: 'courier',
   //palette: {canvasColor: grey200,},
 });
-
 class Home extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       data: [],
-      text: "Jake is a nerd",
-      count: 0
+      count: 0,
+      editorState:EditorState.createWithContent(ContentState.createFromText("hello")),
     }
+    this.onChange = (editorState) => this.setState({editorState})
 
     firebase.auth().signInAnonymously().then((user) => {
       console.log(user.isAnonymous);
@@ -66,6 +68,7 @@ class Home extends Component {
   componentDidMount() {
     this.getResponse();
     this.renderCards();
+
   }
 
   renderCards() {
@@ -73,7 +76,7 @@ class Home extends Component {
     return this.state.data.map(info => {
       return (<Row className="show-grid">
         <Card className="card" onClick={() => {
-            this.setState({text: info});
+            this.setState({editorState:EditorState.createWithContent(ContentState.createFromText(info))});
           }}>
           <CardHeader className='card-header' title="Your note title" subtitle="Some of the notes text..."/>
           <CardText expandable={true}>
@@ -97,12 +100,22 @@ class Home extends Component {
               <FlatButton label="Delete"/>
             </CardActions>
           <CardText>
+
             <Scrollbars id="scrollbars" autoHeight="autoHeight" autoHeightMin={100} autoHeightMax={450} style={{
                 width: 500
               }}>
-              {this.state.text}
+              <div id="content">
+
+                    <div className="editor">
+                      <Editor
+                        editorState={this.state.editorState}
+                        onChange={this.onChange}
+                      />
+                    </div>
+                  </div>
             </Scrollbars>
           </CardText>
+
 
         </Card>
       </Grid>
