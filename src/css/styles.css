@@ -19,12 +19,6 @@ table {
   border-radius: 0;
   background-color: #222222 !important;
 }
-.jumbo {
-  margin-top: -20px;
-  /*background-image: url("../../assets/jumbo.jpg");*/
-  background-size: cover;
-  padding-bottom: 20%;
-}
 #card_buttons{
   margin-left: 25vw;
 }
