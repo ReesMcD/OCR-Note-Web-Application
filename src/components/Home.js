@@ -25,7 +25,7 @@ import FlatButton from 'material-ui/FlatButton';
 import * as firebase from "firebase";
 import {Scrollbars} from 'react-custom-scrollbars';
 import {Editor, EditorState, ContentState} from 'draft-js';
-
+import RenderIf from 'render-if-react';
 firebase.initializeApp({
   apiKey: "AIzaSyAcjSYn8aBoMUukqkYCUZMjzNHpXlp2I8c",
   authDomain: "takepicture-b07cc.firebaseapp.com",
@@ -47,6 +47,7 @@ class Home extends Component {
       data: [],
       count: 0,
       editorState:EditorState.createWithContent(ContentState.createFromText("hello")),
+      flag: false,
     }
     this.onChange = (editorState) => this.setState({editorState})
 
@@ -96,14 +97,14 @@ class Home extends Component {
         <Card id="panel" className="card">
           <CardHeader className='card-header' title="Note"/>
             <CardActions id="card_buttons">
-              <FlatButton label="Edit"/>
+              <FlatButton label="Edit"onClick ={()=>{this.setState({flag: true});}}/>
               <FlatButton label="Delete"/>
             </CardActions>
           <CardText>
-
             <Scrollbars id="scrollbars" autoHeight="autoHeight" autoHeightMin={100} autoHeightMax={450} style={{
                 width: 500
               }}>
+                <RenderIf condition = {this.state.flag === true}>
               <div id="content">
 
                     <div className="editor">
@@ -113,6 +114,7 @@ class Home extends Component {
                       />
                     </div>
                   </div>
+                  </RenderIf>
             </Scrollbars>
           </CardText>
 
