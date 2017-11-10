@@ -46,9 +46,9 @@ class Home extends Component {
     this.state = {
       data: [],
       count: 0,
-      editorState: EditorState.createWithContent(ContentState.createFromText("hello")),
+      editorState:EditorState.createWithContent(ContentState.createFromText("hello")),
       flag: false,
-      text: null
+      text:null,
     }
     this.onChange = (editorState) => this.setState({editorState})
 
@@ -57,7 +57,7 @@ class Home extends Component {
     });
     // var database = firebase.database();
     // this.renderCards();
-    //  const ElseComponent = () =>{ <div> {this.state.editorState} </div>}
+  //  const ElseComponent = () =>{ <div> {this.state.editorState} </div>}
   }
 
   getResponse = () => {
@@ -75,13 +75,12 @@ class Home extends Component {
   }
 
   renderCards() {
+    //console.log(this.state.data);
     return this.state.data.map(info => {
       return (<Row className="show-grid">
         <Card className="card" onClick={() => {
-            this.setState({
-              editorState: EditorState.createWithContent(ContentState.createFromText(info))
-            });
-            this.setState({text: info});
+            this.setState({editorState:EditorState.createWithContent(ContentState.createFromText(info))});
+            this.setState({text:info});
           }}>
           <CardHeader className='card-header' title="Your note title" subtitle="Some of the notes text..."/>
           <CardText expandable={true}>
@@ -93,7 +92,7 @@ class Home extends Component {
   }
 
   render() {
-    const ElseComponent = () => <div>{this.state.text}</div>
+const ElseComponent = () => <div>{this.state.text}</div>
     return (<MuiThemeProvider muiTheme={muiTheme}>
       <Grid>
         <Col id="left" sm={2} md={2} lg={2}>
@@ -101,30 +100,34 @@ class Home extends Component {
         </Col>
         <Card id="panel" className="card">
           <CardHeader className='card-header' title="Note"/>
-          <CardActions id="card_buttons">
-            <FlatButton label="Edit" onClick="onClick" ={()=>{
+            <CardActions id="card_buttons">
+              <FlatButton label="Edit" onClick ={()=>{
                 if (this.state.flag ===true) {
                   this.setState({flag: false});
                 } else {
                   this.setState({flag: true});
-                  }
+                }
                 }
               }/>
-            <FlatButton label="Delete"/>
-          </CardActions>
+              <FlatButton label="Delete"/>
+            </CardActions>
           <CardText>
             <Scrollbars id="scrollbars" autoHeight="autoHeight" autoHeightMin={100} autoHeightMax={450} style={{
                 width: 500
               }}>
-              <RenderIf condition {this.state.flag === true} elseComponent={ElseComponent}>
-                <div id="content">
-                  <div className="editor">
-                    <Editor editorState={this.state.editorState} onChange={this.onChange}/>
+                <RenderIf condition = {this.state.flag === true} elseComponent={ElseComponent}>
+              <div id="content">
+                    <div className="editor">
+                      <Editor
+                        editorState={this.state.editorState}
+                        onChange={this.onChange}
+                      />
+                    </div>
                   </div>
-                </div>
-              </RenderIf>
+                  </RenderIf>
             </Scrollbars>
           </CardText>
+
 
         </Card>
       </Grid>
