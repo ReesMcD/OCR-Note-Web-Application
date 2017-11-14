@@ -46,11 +46,13 @@ class Home extends Component {
     this.state = {
       data: [],
       currentIndex: null,
-      editorState:EditorState.createWithContent(ContentState.createFromText("hello")),
+      editorState:EditorState.createEmpty(),//EditorState.createWithContent(ContentState.createFromText("hello")),
       flag: false,
       text:null,
+      tempText:null,
     }
-    this.onChange = (editorState) => this.setState({editorState})
+    this.onChange = (editorState) => {
+      this.setState({editorState:editorState})}
 
     firebase.auth().signInAnonymously().then((user) => {
       console.log(user.isAnonymous);
@@ -82,7 +84,7 @@ class Home extends Component {
             this.setState({editorState:EditorState.createWithContent(ContentState.createFromText(info))});
             this.setState({
               text:info,
-              currentIndex:this.state.data.indexOf(info),
+              currentIndex:this.state.data.indexOf(info), //Could be potentially problematic
             });
     console.log(this.state.currentIndex);
           }}>
@@ -118,21 +120,13 @@ const ElseComponent = () => <div>{this.state.text}</div>
             return firebase.database().ref().update(updates);
             }
               <RenderIf condition = {this.state.flag === true}>
-              <FlatButton label="Save" onClick ={()=>
-              {
-                var postData = {
-                  /*currentIndex:this.state.currentIndex,*/
-                  5:this.state.data,
-                };
-
-                var newPostKey =firebase.database().ref().child('notes').push().key;
-
+              <FlatButton label="Save" onClick ={()=> {
                 var updates = {};
-                updates['/notes/' + newPostKey] = postData;
+                var newText = this.state.editorState.getCurrentContent().getPlainText();
+                updates['/notes/' + this.state.currentIndex ] = newText;
+                this.getResponse(); //trying to update dynamicly
 
-
-              return firebase.database().ref().update(updates);
-              console.log(firebase.database().ref().update(updates));
+                return firebase.database().ref().update(updates);
             }
           }
           />
