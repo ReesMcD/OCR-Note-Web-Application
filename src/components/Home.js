@@ -109,6 +109,11 @@ const ElseComponent = () => <div>{this.state.text}</div>
                 }
                 }
               }/>
+
+              <RenderIf condition = {this.state.flag === true}>
+              <FlatButton label="Save"/>
+              </RenderIf>
+
               <FlatButton label="Delete"/>
             </CardActions>
           <CardText>
