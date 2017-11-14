@@ -45,7 +45,7 @@ class Home extends Component {
 
     this.state = {
       data: [],
-      count: 0,
+      currentIndex: null,
       editorState:EditorState.createWithContent(ContentState.createFromText("hello")),
       flag: false,
       text:null,
@@ -65,13 +65,13 @@ class Home extends Component {
       console.log("From firebase");
       console.log(snapshot.val());
       this.setState({data: snapshot.val()});
+    //  snapshot.val().indexOf
     });
   }
 
   componentDidMount() {
     this.getResponse();
     this.renderCards();
-
   }
 
   renderCards() {
@@ -80,7 +80,11 @@ class Home extends Component {
       return (<Row className="show-grid">
         <Card className="card" onClick={() => {
             this.setState({editorState:EditorState.createWithContent(ContentState.createFromText(info))});
-            this.setState({text:info});
+            this.setState({
+              text:info,
+              currentIndex:this.state.data.indexOf(info),
+            });
+    console.log(this.state.currentIndex);
           }}>
           <CardHeader className='card-header' title="Your note title" subtitle="Some of the notes text..."/>
           <CardText expandable={true}>
@@ -110,8 +114,28 @@ const ElseComponent = () => <div>{this.state.text}</div>
                 }
               }/>
 
+
+            return firebase.database().ref().update(updates);
+            }
               <RenderIf condition = {this.state.flag === true}>
-              <FlatButton label="Save"/>
+              <FlatButton label="Save" onClick ={()=>
+              {
+                var postData = {
+                  /*currentIndex:this.state.currentIndex,*/
+                  5:this.state.data,
+                };
+
+                var newPostKey =firebase.database().ref().child('notes').push().key;
+
+                var updates = {};
+                updates['/notes/' + newPostKey] = postData;
+
+
+              return firebase.database().ref().update(updates);
+              console.log(firebase.database().ref().update(updates));
+            }
+          }
+          />
               </RenderIf>
 
               <FlatButton label="Delete"/>
